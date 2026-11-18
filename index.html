@@ -357,7 +357,7 @@
 </div>
 
 <script>
-    // BeYourLover公式サイトの実在商品データベース ＆ 正しい個別リンク
+    // 公式サイトの正確な個別商品詳細ページのURLを網羅したデータベース
     const products = [
         {
             id: 'tara_s2',
@@ -365,16 +365,16 @@
             catch: '世界累計販売数突破！王道のパルス吸引＆2点同時責めモデル',
             desc: 'クリトリスを包み込むパワフルなパルス吸引と、Gスポットへのバイブレーションを同時に楽しめる殿堂入りアイテム。初心者から上級者まで絶大な支持を得ています。',
             tags: ['強力吸引', '2点同時責め', '中イキ開発', 'アプリ対応', 'ベストセラー'],
-            url: 'https://www.beyourlover.co.jp/app-toys', // アプリ対応・Taraシリーズ掲載ページ
+            url: 'https://www.beyourlover.co.jp/ToyCod-TaraS2',
             weights: { suction: 5, dual: 5, insert: 3, app: 3, beginner: 3, intense: 4 }
         },
         {
-            id: 'funami',
+            id: 'funami_app',
             name: 'ToyCod 二奈美（ふなみ） APP版',
             catch: '高速ピストン×セパレート吸うやつのフルスペックモンスター',
             desc: '自動ピストン機能に加え、吸引部分が分離してクリや乳首を自由に攻められる最高峰モデル。遠隔アプリ対応で徹底的な開発を求める方に。',
             tags: ['高速ピストン', '2点分離操作', 'アプリ遠隔', '上級者向け', 'オールインワン'],
-            url: 'https://www.beyourlover.co.jp/app-toys',
+            url: 'https://www.beyourlover.co.jp/Toycod-Funamiapp',
             weights: { piston: 5, insert: 5, dual: 4, intense: 5, app: 4, expert: 5, nipple: 3 }
         },
         {
@@ -383,7 +383,7 @@
             catch: '本物の舌と唇を再現！とろける舌舐め×バキューム吸引',
             desc: '柔らかいシリコンの「舌」がペロペロと舐め上げ、甘噛み＆吸引するクンニ特化型。温感機能も搭載し、優しい愛撫からじっくり高まりたい方に。',
             tags: ['リアル舌舐め', 'クンニ再現', 'バキューム吸引', '温感機能', '乳首責め◎'],
-            url: 'https://www.beyourlover.co.jp/app-toys',
+            url: 'https://www.beyourlover.co.jp/shokujinka-vibe',
             weights: { tongue: 5, clit: 5, nipple: 5, gentle: 4, warm: 3, suction: 3 }
         },
         {
@@ -392,7 +392,7 @@
             catch: '完全カモフラージュ×超静音！持ち歩ける秘密の吸引ローター',
             desc: '一見すると完全におしゃれなワイヤレスイヤホンケース。超静音設計＆パワフルな吸引力で、家族バレ防止や外出先での秘密のプレイにも最適。',
             tags: ['超静音設計', 'バレないデザイン', '持ち運び◎', 'アプリ対応', '初心者向け'],
-            url: 'https://www.beyourlover.co.jp/app-toys',
+            url: 'https://www.beyourlover.co.jp/Beyourlover-mimiki',
             weights: { stealth: 5, quiet: 5, clit: 4, suction: 4, beginner: 5, thrill: 5, app: 4 }
         },
         {
@@ -401,16 +401,16 @@
             catch: '人肌のぬくもり「温感ヒーター」×親子機リモコン操作',
             desc: '約40℃のじんわり温かいヒーターでリアルな体温を再現。セパレート式のリモコンやアプリで、パートナーに主導権を握られるプレイにも。',
             tags: ['じんわり温感', '親子機リモコン', 'リアル体温再現', '優しい挿入感', 'アプリ対応'],
-            url: 'https://www.beyourlover.co.jp/app-toys',
+            url: 'https://www.beyourlover.co.jp/toycod-minaka',
             weights: { warm: 5, gentle: 5, insert: 4, submissive: 4, app: 4, beginner: 3 }
         },
         {
             id: 'sixth_sense',
-            name: 'BeYourLover Sixth Sense（第六感）',
+            name: 'BeYourLover Sixth Sense ピンク',
             catch: 'ブラの中に隠せる超軽量50g！遠隔操作＆スリル特化',
             desc: '下着の中にフィットして固定できるウェアラブル（装着型）ローター。遠隔操作や外出先での”ながら使い”で、M気質やスリルを楽しみたい方に。',
             tags: ['ショーツ装着型', 'ハンズフリー', '遠隔操作特化', '軽量設計', 'M気質・スリル'],
-            url: 'https://www.beyourlover.co.jp/app-toys',
+            url: 'https://www.beyourlover.co.jp/Sixth-SensePink',
             weights: { thrill: 5, submissive: 5, app: 5, quiet: 4, clit: 4, dual: 3 }
         }
     ];
@@ -674,7 +674,7 @@
                 <div class="item-catch">${item.catch}</div>
                 <p class="item-desc">${item.desc}</p>
                 <div class="tags-wrap">${tagsHtml}</div>
-                <a href="${item.url}" target="_blank" class="shop-link-btn">公式サイトでこのアイテムを見る ↗</a>
+                <a href="${item.url}" target="_blank" class="shop-link-btn">この商品の詳細ページを見る（公式サイト） ↗</a>
             `;
             container.appendChild(card);
         });
