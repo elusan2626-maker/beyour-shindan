@@ -253,6 +253,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
+            margin-bottom: 15px;
         }
 
         .tag {
@@ -264,13 +265,35 @@
             font-weight: bold;
         }
 
+        /* リンクボタンのスタイル */
+        .shop-link-btn {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 12px 0;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background 0.2s, transform 0.1s;
+            box-sizing: border-box;
+            box-shadow: 0 4px 10px rgba(255, 75, 114, 0.25);
+        }
+
+        .shop-link-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
         .restart-wrap {
             text-align: center;
             margin-top: 30px;
         }
 
         .restart-btn {
-            background: var(--primary);
+            background: #333;
             color: #fff;
             border: none;
             border-radius: 30px;
@@ -279,11 +302,10 @@
             font-weight: bold;
             cursor: pointer;
             transition: background 0.2s;
-            box-shadow: 0 4px 15px rgba(255, 75, 114, 0.3);
         }
 
         .restart-btn:hover {
-            background: var(--primary-dark);
+            background: #000;
         }
     </style>
 </head>
@@ -336,7 +358,7 @@
 </div>
 
 <script>
-    // 商品データベース（BeYourLoverの代表的な特徴・機能を持つモデル群）
+    // 商品データベース（BeYourLoverの女性用おもちゃカテゴリリンク付き）
     const products = [
         {
             id: 'tara_s2',
@@ -344,6 +366,7 @@
             catch: '王道にして最強！魂まで吸い上げられる2点同時責めモデル',
             desc: 'クリトリスを包み込むパワフルな「パルス吸引」と、Gスポットを的確に捉えるバイブレーションの2点同時責め。初めての中イキ・同時イキを目指すなら間違いなしの殿堂入りモデルです。',
             tags: ['強力吸引', '2点同時責め', '中イキ開発', 'アプリ遠隔対応', '初心者〜上級者'],
+            url: 'https://www.beyourlover.co.jp/female-toys',
             weights: { suction: 5, dual: 5, insert: 3, app: 3, beginner: 3, intense: 4 }
         },
         {
@@ -352,6 +375,7 @@
             catch: '高速ピストン×セパレート吸引のフルスペックモンスター',
             desc: '自動で奥を突き上げる「ピストン機能」に加え、吸引部分が分離して乳首やクリを自由に攻められる変幻自在モデル。激しい快感や徹底的な開発を求める上級者も大満足の仕様。',
             tags: ['高速ピストン', '2点分離操作', 'アプリ遠隔対応', '上級者向け', '激しめ快感'],
+            url: 'https://www.beyourlover.co.jp/female-toys',
             weights: { piston: 5, insert: 5, dual: 4, intense: 5, app: 4, expert: 5, nipple: 3 }
         },
         {
@@ -360,6 +384,7 @@
             catch: 'まるで本物の舌と唇！とろける舌舐め＆バキューム吸引',
             desc: '機械的な振動ではなく、柔らかいシリコンの「舌」がペロペロと舐め上げ、甘噛み＆吸引するリアル快感特化型。クンニが好きな方や、乳首責め・優しい愛撫からじっくり高まりたい方に最適。',
             tags: ['リアル舌舐め', 'クンニ再現', 'バキューム吸引', '乳首責め◎', '温感機能'],
+            url: 'https://www.beyourlover.co.jp/female-toys',
             weights: { tongue: 5, clit: 5, nipple: 5, gentle: 4, warm: 3, suction: 3 }
         },
         {
@@ -368,6 +393,7 @@
             catch: '完全カモフラージュ×超静音！持ち歩ける秘密の吸引ローター',
             desc: '一見すると完全におしゃれなワイヤレスイヤホンケース。超静音設計ながらパワフルな吸引力を秘めており、家族バレ防止はもちろん、外出先やデート中の秘密のプレイにも使えるスリル満点の一台。',
             tags: ['超静音設計', 'バレないデザイン', '持ち運び◎', 'アプリ遠隔', '初心者向け'],
+            url: 'https://www.beyourlover.co.jp/female-toys',
             weights: { stealth: 5, quiet: 5, clit: 4, suction: 4, beginner: 5, thrill: 5, app: 4 }
         },
         {
@@ -376,6 +402,7 @@
             catch: '人肌のぬくもり「温感ヒーター」×親子機リモコン操作',
             desc: '約40℃のじんわり温かいヒーター機能を搭載し、冷えや緊張をほぐしながらリアルな体温を再現。セパレート式のリモコン（親子機）やアプリで、パートナーに主導権を握られるプレイにも最適。',
             tags: ['じんわり温感', '親子機リモコン', 'リアル体温再現', '優しい挿入感', 'パートナー操作'],
+            url: 'https://www.beyourlover.co.jp/female-toys',
             weights: { warm: 5, gentle: 5, insert: 4, submissive: 4, app: 4, beginner: 3 }
         },
         {
@@ -384,6 +411,7 @@
             catch: 'ハンズフリーでショーツの中に忍ばせる！遠隔＆露出スリル特化',
             desc: '下着の中にフィットして固定できるウェアラブル（装着型）デザイン。両手が自由になるため、お散歩デートや映画館での遠隔操作、または他のプレイと組み合わせたM気質全開の遊び方にぴったり。',
             tags: ['ショーツ装着型', 'ハンズフリー', '遠隔操作特化', 'M気質・スリル', '静音設計'],
+            url: 'https://www.beyourlover.co.jp/female-toys',
             weights: { thrill: 5, submissive: 5, app: 5, quiet: 4, clit: 4, dual: 3 }
         }
     ];
@@ -566,7 +594,6 @@
             optionsList.appendChild(btn);
         });
 
-        // 戻るボタンの表示制御
         document.getElementById('back-btn').style.display = currentIdx > 0 ? 'inline-block' : 'none';
     }
 
@@ -575,7 +602,6 @@
 
         if (currentIdx < questions.length - 1) {
             currentIdx++;
-            // アニメーション再トリガー用
             const area = document.getElementById('quiz-area');
             area.style.animation = 'none';
             area.offsetHeight; 
@@ -594,7 +620,6 @@
     }
 
     function calculateAndShowResult() {
-        // ユーザーの総合スコア集計
         const totalScores = {};
         userAnswers.forEach((optIdx, qIdx) => {
             if (optIdx !== null) {
@@ -605,7 +630,6 @@
             }
         });
 
-        // 各商品のマッチスコア計算
         const rankedProducts = products.map(product => {
             let matchScore = 0;
             let maxPossible = 0;
@@ -613,18 +637,15 @@
             for (const [trait, weight] of Object.entries(product.weights)) {
                 const userVal = totalScores[trait] || 0;
                 matchScore += userVal * weight;
-                maxPossible += 15 * weight; // 基準値
+                maxPossible += 15 * weight;
             }
 
-            // マッチ度を75%〜99%のリアルなレンジに正規化
             let rawPercent = Math.min(99, Math.max(72, Math.round((matchScore / (maxPossible * 0.55)) * 100)));
             return { ...product, matchScore, matchPercent: rawPercent };
         });
 
-        // スコア降順ソート
         rankedProducts.sort((a, b) => b.matchScore - a.matchScore);
 
-        // 1位〜3位のパーセンテージに自然な差をつける調整
         if (rankedProducts[0].matchPercent <= rankedProducts[1].matchPercent) {
             rankedProducts[0].matchPercent = Math.min(99, rankedProducts[1].matchPercent + 4);
         }
@@ -632,10 +653,8 @@
             rankedProducts[1].matchPercent = Math.max(75, rankedProducts[2].matchPercent + 3);
         }
 
-        // 性格・性癖サマリー文の生成
         generateSummary(totalScores);
 
-        // ランキング描画
         const container = document.getElementById('ranking-container');
         container.innerHTML = '';
 
@@ -656,11 +675,11 @@
                 <div class="item-catch">${item.catch}</div>
                 <p class="item-desc">${item.desc}</p>
                 <div class="tags-wrap">${tagsHtml}</div>
+                <a href="${item.url}" target="_blank" class="shop-link-btn">このアイテムの詳細を見る（公式サイトへ） ↗</a>
             `;
             container.appendChild(card);
         });
 
-        // 画面切り替え
         document.getElementById('quiz-section').style.display = 'none';
         document.getElementById('main-header').style.display = 'none';
         document.getElementById('result-section').style.display = 'block';
@@ -694,7 +713,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 初期化
     renderQuestion();
 </script>
 
