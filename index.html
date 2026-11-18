@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深層フェムテック診断（全15問） | BeYourLover風</title>
+    <style>
+        :root {
+            --primary: #ff4b72;
+            --primary-dark: #d8365b;
+            --secondary: #ff8fa3;
+            --bg-gradient: linear-gradient(135deg, #fff0f4 0%, #ffe0e9 100%);
+            --card-bg: #ffffff;
+            --text-main: #2d2d2d;
+            --text-sub: #666666;
+            --border: #ffd1dc;
+            --gold: #f5a623;
+            --silver: #9b9b9b;
+            --bronze: #c87533;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 12px 35px rgba(255, 75, 114, 0.18);
+            padding: 30px 25px;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin: 0 0 8px 0;
+        }
+
+        .subtitle {
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* プログレスバー */
+        .progress-wrapper {
+            margin-bottom: 25px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #ffe6ec;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 6.66%;
+            transition: width 0.3s ease;
+        }
+
+        /* 質問エリア */
+        .quiz-area {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: #fff0f3;
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: bold;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #ffffff;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 15px 18px;
+            text-align: left;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            line-height: 1.4;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: #fff8fa;
+            transform: translateX(4px);
+        }
+
+        .nav-controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 5px 0;
+        }
+
+        .back-btn:hover {
+            color: var(--primary);
+        }
+
+        /* 結果画面 */
+        .result-area {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .result-header h2 {
+            color: var(--primary);
+            font-size: 1.35rem;
+            margin-bottom: 8px;
+        }
+
+        .personality-summary {
+            background: #fff5f7;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .rank-card {
+            border: 2px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .rank-card.rank-1 {
+            border-color: var(--gold);
+            background: linear-gradient(to bottom right, #fffdf9, #fff7ea);
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 5px 14px;
+            border-radius: 20px;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .rank-1 .rank-badge { background: var(--gold); }
+        .rank-2 .rank-badge { background: var(--silver); }
+        .rank-3 .rank-badge { background: var(--bronze); }
+
+        .match-rate {
+            float: right;
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .item-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-main);
+            margin: 0 0 6px 0;
+        }
+
+        .item-catch {
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .item-desc {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-sub);
+            margin-bottom: 12px;
+        }
+
+        .tags-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            background: #ffeef2;
+            color: var(--primary-dark);
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
+        .restart-wrap {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .restart-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 14px 35px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 4px 15px rgba(255, 75, 114, 0.3);
+        }
+
+        .restart-btn:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header id="main-header">
+        <h1>💕 深層フェムテック・ラブグッズ診断</h1>
+        <p class="subtitle">全15問からあなたの性感帯・性癖・理想の快感を徹底分析！</p>
+    </header>
+
+    <!-- 質問セクション -->
+    <div id="quiz-section">
+        <div class="progress-wrapper">
+            <div class="progress-info">
+                <span id="step-indicator">Question 1 / 15</span>
+                <span id="percent-indicator">7%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="quiz-area" id="quiz-area">
+            <span class="category-badge" id="q-category">カテゴリー</span>
+            <div class="question-text" id="q-text">質問文がここに入ります</div>
+            <div class="options-list" id="options-list"></div>
+        </div>
+
+        <div class="nav-controls">
+            <button class="back-btn" id="back-btn" onclick="prevQuestion()" style="display: none;">← 前の質問に戻る</button>
+        </div>
+    </div>
+
+    <!-- 結果セクション -->
+    <div class="result-area" id="result-section">
+        <div class="result-header">
+            <h2>✨ あなたにマッチするBEST 3 ✨</h2>
+            <p class="subtitle">15の回答から導き出された運命のアイテムランキング</p>
+        </div>
+
+        <div class="personality-summary" id="personality-summary"></div>
+
+        <div id="ranking-container"></div>
+
+        <div class="restart-wrap">
+            <button class="restart-btn" onclick="restartQuiz()">最初からもう一度診断する</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 商品データベース（BeYourLoverの代表的な特徴・機能を持つモデル群）
+    const products = [
+        {
+            id: 'tara_s2',
+            name: 'ToyCod Tara S 2代目（青い吸うやつ）',
+            catch: '王道にして最強！魂まで吸い上げられる2点同時責めモデル',
+            desc: 'クリトリスを包み込むパワフルな「パルス吸引」と、Gスポットを的確に捉えるバイブレーションの2点同時責め。初めての中イキ・同時イキを目指すなら間違いなしの殿堂入りモデルです。',
+            tags: ['強力吸引', '2点同時責め', '中イキ開発', 'アプリ遠隔対応', '初心者〜上級者'],
+            weights: { suction: 5, dual: 5, insert: 3, app: 3, beginner: 3, intense: 4 }
+        },
+        {
+            id: 'funami',
+            name: 'ToyCod 二奈美（ふなみ） / Tara X 2代目',
+            catch: '高速ピストン×セパレート吸引のフルスペックモンスター',
+            desc: '自動で奥を突き上げる「ピストン機能」に加え、吸引部分が分離して乳首やクリを自由に攻められる変幻自在モデル。激しい快感や徹底的な開発を求める上級者も大満足の仕様。',
+            tags: ['高速ピストン', '2点分離操作', 'アプリ遠隔対応', '上級者向け', '激しめ快感'],
+            weights: { piston: 5, insert: 5, dual: 4, intense: 5, app: 4, expert: 5, nipple: 3 }
+        },
+        {
+            id: 'shokujinka',
+            name: 'ToyCod 食人花 / 舌恋姫（生クンニ再現モデル）',
+            catch: 'まるで本物の舌と唇！とろける舌舐め＆バキューム吸引',
+            desc: '機械的な振動ではなく、柔らかいシリコンの「舌」がペロペロと舐め上げ、甘噛み＆吸引するリアル快感特化型。クンニが好きな方や、乳首責め・優しい愛撫からじっくり高まりたい方に最適。',
+            tags: ['リアル舌舐め', 'クンニ再現', 'バキューム吸引', '乳首責め◎', '温感機能'],
+            weights: { tongue: 5, clit: 5, nipple: 5, gentle: 4, warm: 3, suction: 3 }
+        },
+        {
+            id: 'mimiki',
+            name: 'BeYourLover みみき（吸うやつイヤホン型）',
+            catch: '完全カモフラージュ×超静音！持ち歩ける秘密の吸引ローター',
+            desc: '一見すると完全におしゃれなワイヤレスイヤホンケース。超静音設計ながらパワフルな吸引力を秘めており、家族バレ防止はもちろん、外出先やデート中の秘密のプレイにも使えるスリル満点の一台。',
+            tags: ['超静音設計', 'バレないデザイン', '持ち運び◎', 'アプリ遠隔', '初心者向け'],
+            weights: { stealth: 5, quiet: 5, clit: 4, suction: 4, beginner: 5, thrill: 5, app: 4 }
+        },
+        {
+            id: 'minaka',
+            name: 'BeYourLover 海那果（みなか） / HIBA',
+            catch: '人肌のぬくもり「温感ヒーター」×親子機リモコン操作',
+            desc: '約40℃のじんわり温かいヒーター機能を搭載し、冷えや緊張をほぐしながらリアルな体温を再現。セパレート式のリモコン（親子機）やアプリで、パートナーに主導権を握られるプレイにも最適。',
+            tags: ['じんわり温感', '親子機リモコン', 'リアル体温再現', '優しい挿入感', 'パートナー操作'],
+            weights: { warm: 5, gentle: 5, insert: 4, submissive: 4, app: 4, beginner: 3 }
+        },
+        {
+            id: 'haruka',
+            name: 'BeYourLover 遥香（はるか） / 装着型バイブ',
+            catch: 'ハンズフリーでショーツの中に忍ばせる！遠隔＆露出スリル特化',
+            desc: '下着の中にフィットして固定できるウェアラブル（装着型）デザイン。両手が自由になるため、お散歩デートや映画館での遠隔操作、または他のプレイと組み合わせたM気質全開の遊び方にぴったり。',
+            tags: ['ショーツ装着型', 'ハンズフリー', '遠隔操作特化', 'M気質・スリル', '静音設計'],
+            weights: { thrill: 5, submissive: 5, app: 5, quiet: 4, clit: 4, dual: 3 }
+        }
+    ];
+
+    // 全15問の質問データ
+    const questions = [
+        {
+            category: '経験・ステップ',
+            text: 'Q1. ラブグッズの使用経験はどのくらいありますか？',
+            options: [
+                { text: 'まったくの初心者・これからデビューしたい', scores: { beginner: 4, gentle: 2, stealth: 1 } },
+                { text: 'いくつか使ったことがある（ローターや電マなど）', scores: { clit: 2, suction: 2, dual: 2 } },
+                { text: '中級者以上（吸うやつや挿入系も経験済み）', scores: { expert: 3, dual: 3, insert: 2 } },
+                { text: 'かなり使いこなしている・新しい刺激を探している', scores: { expert: 5, intense: 4, piston: 3 } }
+            ]
+        },
+        {
+            category: '性感帯の傾向',
+            text: 'Q2. 一番感じやすい・開発したいメインの性感帯はどこですか？',
+            options: [
+                { text: 'クリトリス（外側の集中攻撃で確実にイキたい）', scores: { clit: 5, suction: 3, tongue: 3 } },
+                { text: '膣内・Gスポット（奥を突かれて深い中イキを味わいたい）', scores: { insert: 5, piston: 3, warm: 2 } },
+                { text: 'クリも中も両方！（同時に責められて頭が真っ白になりたい）', scores: { dual: 5, clit: 3, insert: 3 } },
+                { text: '乳首やバストトップ（チクニーでじわじわ高まりたい）', scores: { nipple: 5, tongue: 4, suction: 2 } }
+            ]
+        },
+        {
+            category: '好みの刺激タイプ',
+            text: 'Q3. どんな「タッチ・動き」の刺激に一番弱いですか？',
+            options: [
+                { text: '真空のように吸い付く「バキューム吸引」', scores: { suction: 5, clit: 3 } },
+                { text: 'ねっとり絡みつく「リアルな舌舐め・クンニ感」', scores: { tongue: 5, gentle: 3, nipple: 2 } },
+                { text: '機械的にガツガツ突かれる「ピストン運動」', scores: { piston: 5, intense: 4, insert: 3 } },
+                { text: '小刻みに震える「心地よいバイブレーション」', scores: { dual: 3, insert: 2, thrill: 2 } }
+            ]
+        },
+        {
+            category: '温度・質感の好み',
+            text: 'Q4. 人肌のような「温感（ヒーター）機能」に興味はありますか？',
+            options: [
+                { text: 'すごく惹かれる！冷たいシリコンよりリアルな温もりが欲しい', scores: { warm: 5, gentle: 3 } },
+                { text: 'あれば嬉しい・冷え性なので温まりながら使いたい', scores: { warm: 3, tongue: 2 } },
+                { text: '温度よりも動きの激しさや吸引力を優先したい', scores: { intense: 3, suction: 2, piston: 2 } },
+                { text: '特にこだわらない', scores: {} }
+            ]
+        },
+        {
+            category: '強さとペース',
+            text: 'Q5. イクまでの理想のペースと刺激の強さは？',
+            options: [
+                { text: '弱めから少しずつ、優しく焦らされながら高まりたい', scores: { gentle: 5, tongue: 3, warm: 2 } },
+                { text: '最初は優しく、最後は強めの刺激で一気に駆け上がりたい', scores: { dual: 4, suction: 3 } },
+                { text: '最初からパワフル！容赦ない強い刺激で連続イキしたい', scores: { intense: 5, piston: 4, expert: 3 } },
+                { text: '長時間じわじわと責め続けられるのが好き', scores: { thrill: 4, submissive: 3, quiet: 2 } }
+            ]
+        },
+        {
+            category: 'プレイのスタイル・性癖',
+            text: 'Q6. 誰と、どんなシチュエーションで使うことが多い（使いたい）ですか？',
+            options: [
+                { text: '一人の夜に、自分のペースでじっくり濃密に楽しみたい', scores: { suction: 2, tongue: 2, insert: 2 } },
+                { text: 'パートナーにリモコンやアプリを渡して、意地悪に操作されたい', scores: { submissive: 5, app: 5, thrill: 3 } },
+                { text: '遠距離の恋人やオンライン相手と、スマホ経由で繋がりたい', scores: { app: 5, thrill: 3 } },
+                { text: 'パートナーとの前戯や本番中のサポートアイテムとして使いたい', scores: { warm: 3, tongue: 3, clit: 2 } }
+            ]
+        },
+        {
+            category: 'M気質・支配欲チェック',
+            text: 'Q7. プレイ中の「主導権」について、あなたの本音に近いのは？',
+            options: [
+                { text: 'いつ強くなるか分からない恐怖と快感で、完全に支配されたい（M気質）', scores: { submissive: 5, app: 4, thrill: 4, intense: 2 } },
+                { text: '自分で角度や強さを微調整して、一番気持ちいいポイントを攻めたい', scores: { clit: 3, insert: 3, dual: 2 } },
+                { text: 'おもちゃに身を任せて、自動でピストンされたり吸われたりしたい', scores: { piston: 4, suction: 4 } },
+                { text: '優しく甘やかされるような愛撫を再現してほしい', scores: { gentle: 4, tongue: 4, warm: 3 } }
+            ]
+        },
+        {
+            category: 'スリル・シチュエーション',
+            text: 'Q8. 「バレるかもしれないスリル」や「野外・外出先での使用」に興奮しますか？',
+            options: [
+                { text: 'すごく興奮する！ショーツに忍ばせてお散歩やデートをしてみたい', scores: { thrill: 5, stealth: 4, quiet: 4, app: 4 } },
+                { text: '家の中だけど、声や音を我慢しながらこっそり使うのが好き', scores: { quiet: 5, stealth: 3, submissive: 2 } },
+                { text: 'スリルよりも、安心できる部屋でリラックスして思い切り感じたい', scores: { warm: 3, piston: 2, dual: 2 } },
+                { text: 'スリルは特に求めない', scores: {} }
+            ]
+        },
+        {
+            category: 'デザイン・カモフラージュ',
+            text: 'Q9. おもちゃの「見た目」や「バレにくさ」はどのくらい重要ですか？',
+            options: [
+                { text: '超重要！家族や同居人に見られても絶対バレないデザインがいい', scores: { stealth: 5, beginner: 3 } },
+                { text: 'いかにもアダルトグッズという形より、可愛い・おしゃれなものがいい', scores: { stealth: 3, suction: 2, warm: 2 } },
+                { text: '機能性重視！リアルな形状や、しっかり奥まで届く形がいい', scores: { insert: 4, piston: 4, expert: 3 } },
+                { text: '保管場所は確保できるので見た目は気にしない', scores: {} }
+            ]
+        },
+        {
+            category: '静音性',
+            text: 'Q10. 動作音（モーター音）の静かさは気になりますか？',
+            options: [
+                { text: '壁が薄い・同居人がいるので「超静音設計」が絶対条件！', scores: { quiet: 5, stealth: 4 } },
+                { text: 'ある程度静かな方が集中できて嬉しい', scores: { quiet: 3, gentle: 2 } },
+                { text: '音よりもパワーやピストンの力強さを優先したい', scores: { intense: 4, piston: 4 } },
+                { text: '多少音がしても気にしない', scores: {} }
+            ]
+        },
+        {
+            category: '挿入感・サイズ感',
+            text: 'Q11. 膣内への「挿入」に対する現在のイメージ・好みは？',
+            options: [
+                { text: '挿入は少し怖い・痛いのが不安なので、まずは外側の刺激からがいい', scores: { clit: 5, beginner: 4, suction: 3, tongue: 3 } },
+                { text: '細めで柔らかい素材なら入れてみたい・中イキに憧れる', scores: { gentle: 4, warm: 4, dual: 3, insert: 3 } },
+                { text: 'しっかりとした存在感と、Gスポットへの圧迫感が大好き', scores: { insert: 5, dual: 4, intense: 3 } },
+                { text: '自分で動かすのは疲れるので、自動ピストンで突かれたい', scores: { piston: 5, insert: 4, expert: 3 } }
+            ]
+        },
+        {
+            category: 'マルチタスク・同時責め',
+            text: 'Q12. 複数の場所を「同時に」責められることについてどう思いますか？',
+            options: [
+                { text: '大好物！クリと中、または乳首とクリなど2点同時で脳がバグりたい', scores: { dual: 5, expert: 3, intense: 3 } },
+                { text: 'まずは1点に集中して、ピンポイントでじっくり感じたい', scores: { clit: 4, suction: 3, tongue: 3 } },
+                { text: '1つのアイテムで、気分によって外側にも内側にも使い分けたい', scores: { warm: 3, stealth: 2 } },
+                { text: '2点同時責めは未経験だけど、すごく興味がある！', scores: { dual: 4, beginner: 2 } }
+            ]
+        },
+        {
+            category: 'スマホ連携・テクノロジー',
+            text: 'Q13. 専用スマホアプリでの操作機能（音楽連動・波形作成・遠隔など）は使いたいですか？',
+            options: [
+                { text: '絶対使いたい！遠隔操作や自分好みのリズム作成を楽しみたい', scores: { app: 5, submissive: 3, thrill: 3 } },
+                { text: 'パートナーと遊ぶ時にあると便利そう', scores: { app: 3, warm: 2 } },
+                { text: 'スマホを開くより、本体のボタンだけで直感的に操作したい', scores: { beginner: 2, suction: 2 } },
+                { text: 'どちらでもよい', scores: {} }
+            ]
+        },
+        {
+            category: '体の反応・悩み',
+            text: 'Q14. 普段のひとりエッチやセックスで、密かに感じている悩み・願望は？',
+            options: [
+                { text: 'なかなかイケない・不感症気味なので圧倒的な吸引力で強制的にイキたい', scores: { suction: 5, intense: 4, clit: 3 } },
+                { text: '濡れにくい・緊張しやすいので、温感や優しい愛撫でほぐされたい', scores: { warm: 5, gentle: 5, tongue: 3 } },
+                { text: 'いつも同じパターンでマンネリ気味。未体験の変態的な刺激が欲しい', scores: { tongue: 4, piston: 4, thrill: 4, expert: 3 } },
+                { text: '指や腕が疲れてしまうので、ハンズフリーや全自動で楽に気持ちよくなりたい', scores: { piston: 4, thrill: 4, submissive: 2 } }
+            ]
+        },
+        {
+            category: '最終チェック・理想の余韻',
+            text: 'Q15. 最後に、このアイテムを使ったあと「どんな自分」になっていたいですか？',
+            options: [
+                { text: '「こんなの初めて…！」と新しい自分の性感帯に目覚めていたい', scores: { dual: 4, suction: 3, beginner: 3 } },
+                { text: '足がガクガクになるまで責められ尽くして、甘い脱力感に浸っていたい', scores: { intense: 5, piston: 4, submissive: 3 } },
+                { text: 'まるで愛する人に丁寧に愛されたような、温かい幸福感に包まれたい', scores: { warm: 5, tongue: 5, gentle: 4 } },
+                { text: '誰にも言えない秘密のスリルを共有して、ドキドキの余韻を楽しみたい', scores: { thrill: 5, stealth: 4, app: 4 } }
+            ]
+        }
+    ];
+
+    let currentIdx = 0;
+    let userAnswers = new Array(questions.length).fill(null);
+
+    function renderQuestion() {
+        const q = questions[currentIdx];
+        document.getElementById('step-indicator').innerText = `Question ${currentIdx + 1} / ${questions.length}`;
+        const percent = Math.round(((currentIdx + 1) / questions.length) * 100);
+        document.getElementById('percent-indicator').innerText = `${percent}%`;
+        document.getElementById('progress-fill').style.width = `${percent}%`;
+
+        document.getElementById('q-category').innerText = q.category;
+        document.getElementById('q-text').innerText = q.text;
+
+        const optionsList = document.getElementById('options-list');
+        optionsList.innerHTML = '';
+
+        q.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt.text;
+            btn.onclick = () => selectOption(idx);
+            optionsList.appendChild(btn);
+        });
+
+        // 戻るボタンの表示制御
+        document.getElementById('back-btn').style.display = currentIdx > 0 ? 'inline-block' : 'none';
+    }
+
+    function selectOption(optionIndex) {
+        userAnswers[currentIdx] = optionIndex;
+
+        if (currentIdx < questions.length - 1) {
+            currentIdx++;
+            // アニメーション再トリガー用
+            const area = document.getElementById('quiz-area');
+            area.style.animation = 'none';
+            area.offsetHeight; 
+            area.style.animation = null;
+            renderQuestion();
+        } else {
+            calculateAndShowResult();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentIdx > 0) {
+            currentIdx--;
+            renderQuestion();
+        }
+    }
+
+    function calculateAndShowResult() {
+        // ユーザーの総合スコア集計
+        const totalScores = {};
+        userAnswers.forEach((optIdx, qIdx) => {
+            if (optIdx !== null) {
+                const scores = questions[qIdx].options[optIdx].scores;
+                for (const [key, val] of Object.entries(scores)) {
+                    totalScores[key] = (totalScores[key] || 0) + val;
+                }
+            }
+        });
+
+        // 各商品のマッチスコア計算
+        const rankedProducts = products.map(product => {
+            let matchScore = 0;
+            let maxPossible = 0;
+
+            for (const [trait, weight] of Object.entries(product.weights)) {
+                const userVal = totalScores[trait] || 0;
+                matchScore += userVal * weight;
+                maxPossible += 15 * weight; // 基準値
+            }
+
+            // マッチ度を75%〜99%のリアルなレンジに正規化
+            let rawPercent = Math.min(99, Math.max(72, Math.round((matchScore / (maxPossible * 0.55)) * 100)));
+            return { ...product, matchScore, matchPercent: rawPercent };
+        });
+
+        // スコア降順ソート
+        rankedProducts.sort((a, b) => b.matchScore - a.matchScore);
+
+        // 1位〜3位のパーセンテージに自然な差をつける調整
+        if (rankedProducts[0].matchPercent <= rankedProducts[1].matchPercent) {
+            rankedProducts[0].matchPercent = Math.min(99, rankedProducts[1].matchPercent + 4);
+        }
+        if (rankedProducts[1].matchPercent <= rankedProducts[2].matchPercent) {
+            rankedProducts[1].matchPercent = Math.max(75, rankedProducts[2].matchPercent + 3);
+        }
+
+        // 性格・性癖サマリー文の生成
+        generateSummary(totalScores);
+
+        // ランキング描画
+        const container = document.getElementById('ranking-container');
+        container.innerHTML = '';
+
+        const rankLabels = ['👑 第1位（運命のベストマッチ）', '🥈 第2位（相性抜群の対抗馬）', '🥉 第3位（新たな扉を開く一台）'];
+
+        rankedProducts.slice(0, 3).forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = `rank-card rank-${index + 1}`;
+            
+            const tagsHtml = item.tags.map(t => `<span class="tag">#${t}</span>`).join('');
+
+            card.innerHTML = `
+                <div>
+                    <span class="rank-badge">${rankLabels[index]}</span>
+                    <span class="match-rate">マッチ度 ${item.matchPercent}%</span>
+                </div>
+                <h3 class="item-name">${item.name}</h3>
+                <div class="item-catch">${item.catch}</div>
+                <p class="item-desc">${item.desc}</p>
+                <div class="tags-wrap">${tagsHtml}</div>
+            `;
+            container.appendChild(card);
+        });
+
+        // 画面切り替え
+        document.getElementById('quiz-section').style.display = 'none';
+        document.getElementById('main-header').style.display = 'none';
+        document.getElementById('result-section').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function generateSummary(scores) {
+        let topTraits = Object.entries(scores).sort((a, b) => b[1] - a[1]).slice(0, 3).map(e => e[0]);
+        let summaryText = '<strong>【あなたの深層フェムテック分析】</strong><br>';
+
+        if (topTraits.includes('submissive') || topTraits.includes('thrill') || topTraits.includes('app')) {
+            summaryText += 'あなたはただ気持ちよくなるだけでなく、<strong>「主導権を奪われるスリル」や「遠隔操作などの背徳感」</strong>に強く興奮するタイプ！スマホ連携やハンズフリー機能があるアイテムで、心の底からゾクゾクする体験がぴったりです。';
+        } else if (topTraits.includes('tongue') || topTraits.includes('warm') || topTraits.includes('gentle')) {
+            summaryText += 'あなたは機械的な激しい刺激よりも、<strong>「人肌のぬくもり」や「本物の舌のようなとろける愛撫」</strong>を求める繊細でロマンチストなタイプ。温感機能やリアルな舌舐め再現モデルが、あなたの心と体を優しく解きほぐします。';
+        } else if (topTraits.includes('piston') || topTraits.includes('intense') || topTraits.includes('dual')) {
+            summaryText += 'あなたは妥協のない強い快感や、<strong>「クリと中の2点同時責め・高速ピストン」</strong>で脳が真っ白になるような深いオーガズムを求める情熱的なタイプ！ハイパワー＆多機能なフラッグシップモデルが真価を発揮します。';
+        } else {
+            summaryText += 'あなたは自分のペースや安心感を大切にしながら、<strong>「ピンポイントで確実に高まれる心地よさ」</strong>を求めるスマートなタイプ。静音性や使いやすさに優れた吸引・ローター系アイテムが最高のパートナーになります。';
+        }
+
+        document.getElementById('personality-summary').innerHTML = summaryText;
+    }
+
+    function restartQuiz() {
+        currentIdx = 0;
+        userAnswers.fill(null);
+        document.getElementById('result-section').style.display = 'none';
+        document.getElementById('main-header').style.display = 'block';
+        document.getElementById('quiz-section').style.display = 'block';
+        renderQuestion();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 初期化
+    renderQuestion();
+</script>
+
+</body>
+</html>
